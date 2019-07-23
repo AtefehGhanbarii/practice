@@ -9,12 +9,13 @@ const Container = styled.div`
   flex: 1
 `;
 
-
 const Wrapper = styled.div`
   position: absolute;
   z-index: 10000;
   margin: 20px;
-  top: 40px;
+  text-align: right;
+  padding: 0px 16px;
+  top: 37px;
   left: 0;
   right: 0;
   background-color: #ededed;
@@ -22,22 +23,30 @@ const Wrapper = styled.div`
 `;
 
 const Button = styled.button`
-  border: 1px solid black;
+  border: none;
   outline: none;
-  padding: 10px 20px 10px 20px;
+  //padding: 10px 20px 10px 20px;
   width: 100%;
   color: #282c34;
+  display: flex;
+  justify-content: center;
+  p{
+padding: 0px 10px;
+font-weight: bold;
+  }
 `;
 
 const OptionWrapper = styled.div`
   padding: 10px;
+  color: #101010;
+  font-size: 14px;
+  font-weight: bold;
 `;
-
 
 export default class Select extends React.Component {
     state = {
         show: false,
-        selected: null
+        selected: []
     };
 
     componentDidMount() {
@@ -45,17 +54,14 @@ export default class Select extends React.Component {
     }
 
     clickListener = () => {
-        console.log('its here lisetingn');
         if (this.state.show) {
             this.toggleOptions();
         }
     };
 
-
     componentWillUnmount() {
         window.removeEventListener('click', this.clickListener);
     }
-
 
     toggleOptions = (event) => {
         if (event) {
@@ -65,22 +71,41 @@ export default class Select extends React.Component {
             show: !this.state.show
         });
     };
+    // handleSelect = (option) => {
+    //     this.toggleOptions();
+    //     this.setState({
+    //         selected: [...this.state.selected, option]
+    //     });
+    //     this.props.onSelect(option);
+    // };
 
     handleSelect = (option) => {
-        this.toggleOptions();
-        this.setState({
-            selected: option
-        });
+        const hasItem = this.state.selected.find((item) => item.name === option.name);
+        console.log(hasItem, 'hasitem');
+        if (hasItem) {
+            this.setState({
+                selected: this.state.selected.filter(item => item.name !== option.name)
+            })
+        } else {
+            this.setState({
+                selected: this.state.selected.concat(option)
+            })
+        }
         this.props.onSelect(option);
     };
 
     render() {
+        console.log(this.state.selected);
         const { options, placeholder } = this.props;
         const { show, selected } = this.state;
         return (
             <Container>
                 <Button onClick={this.toggleOptions}>
-                    {selected ? selected.name : placeholder}
+                    {selected && selected.length ?
+                        selected.map(item => {
+                            return <p>{item.name}</p>
+                        })
+                        : placeholder}
                 </Button>
                 <Wrapper>
                     {

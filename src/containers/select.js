@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import MySelect from '../components/kit/Select/Select';
-
+import SelectBox from '../components/kit/Select/SelectBox';
 
 export default class Select extends Component {
     onSelect = (selectedItem) => {
@@ -10,17 +9,15 @@ export default class Select extends Component {
     render() {
         const options = [
             { name: 'مشهد', value: 1 },
-            { name: 'تهران', value: 1 },
+            { name: 'تهران', value: 2 },
+            { name: 'بابلسر', value: 3 },
+            { name: 'اصفهان', value: 4 },
+            { name: 'شیراز', value: 5 },
         ];
 
         return (
             <div>
-                <MySelect
-                    options={options}
-                    onSelect={this.onSelect}
-                    placeholder="select an option"
-                />
-                <MySelect
+                <SelectBox
                     options={options}
                     onSelect={this.onSelect}
                     placeholder="select an option"
