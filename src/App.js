@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Link, NavLink, Switch} from 'react-router-dom';
 import Product from './containers/product'
 import Counter from './containers/counter';
 import Home from './containers/Home';
-import SelectBox from './containers/select';
+import Select from './containers/Select';
 import Profile from './containers/profile';
 import Posts from './containers/posts';
 import PostItem from './containers/post_item';
@@ -65,7 +65,7 @@ const App = () => {
                     <Route exact path="/counter" component={Counter}/>
                     <Route exact path="/shop" component={Shop}/>
                     <Route exact path="/product" component={Product}/>
-                    <Route exact path="/select" component={SelectBox}/>
+                    <Route exact path="/select" component={Select}/>
                     <Route exact path="/sort" component={Sort}/>
                     <Route exact path="/test" component={Test}/>
                     <Route exact path="/profile" component={Profile}/>

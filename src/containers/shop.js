@@ -13,7 +13,6 @@ const Section = styled.section`
   display: flex;
   text-align: right;
   justify-content: space-between;
-  ...${props => props.style}
 `;
 
 class Shop extends Component {
