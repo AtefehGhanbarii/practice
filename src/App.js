@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Link, NavLink, Switch} from 'react-router-dom';
 import Product from './containers/product'
 import Counter from './containers/counter';
 import Home from './containers/Home';
-import Select from './containers/Select';
+import Select from './containers/select';
 import Profile from './containers/profile';
 import Posts from './containers/posts';
 import PostItem from './containers/post_item';
@@ -13,6 +13,7 @@ import Test from './containers/letconst';
 import TabsExample from './containers/TabsExample';
 import SampleTest from './containers/detector';
 import Finder from './containers/finder';
+import Tabs from './containers/tabs';
 import styled from 'styled-components'
 
 const Header = styled.header`
@@ -70,6 +71,7 @@ const App = () => {
                     <Route exact path="/select" component={Select}/>
                     <Route exact path="/sort" component={Sort}/>
                     <Route exact path="/test" component={Test}/>
+                    <Route exact path="/tabs" component={Tabs}/>
                     <Route exact path="/profile" component={Profile}/>
                     <Route exact path="/posts" component={Posts}/>
                     <Route exact path="/finder" component={Finder}/>
