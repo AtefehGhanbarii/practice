@@ -10,6 +10,7 @@ import PostItem from './containers/post_item';
 import Shop from './containers/shop';
 import Sort from './containers/sort';
 import Test from './containers/letconst';
+import TabsExample from './containers/TabsExample';
 import SampleTest from './containers/detector';
 import Finder from './containers/finder';
 import styled from 'styled-components'
@@ -63,6 +64,7 @@ const App = () => {
                 <Switch>
                     <Route exact path="/posts/:id/:username" component={PostItem}/>
                     <Route exact path="/counter" component={Counter}/>
+                    <Route exact path="/tabs" component={TabsExample}/>
                     <Route exact path="/shop" component={Shop}/>
                     <Route exact path="/product" component={Product}/>
                     <Route exact path="/select" component={Select}/>

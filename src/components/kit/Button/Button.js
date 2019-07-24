@@ -19,12 +19,12 @@ const ButtonSty = styled.button`
   padding: 0.25em 1em;
   border: 2px solid #dcdcdc;
   border-radius: 3px;
-  ...${props => props.style}
 `;
 
 export const Button = (props: Props) => {
     return (
         <ButtonSty
+            {...props}
             onClick={props.onClick}
             disabled={props.disabled}
             type={props.type}
