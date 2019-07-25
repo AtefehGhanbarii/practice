@@ -25,15 +25,16 @@ const Wrapper = styled.div`
 const Button = styled.button`
   border: none;
   outline: none;
-  //padding: 10px 20px 10px 20px;
+  padding: 9px;
   width: 100%;
   color: #282c34;
   display: flex;
   justify-content: center;
-  p{
+  p {
 padding: 0px 10px;
 font-weight: bold;
   }
+  
 `;
 
 const OptionWrapper = styled.div`
@@ -71,6 +72,7 @@ export default class Select extends React.Component {
             show: !this.state.show
         });
     };
+
     // handleSelect = (option) => {
     //     this.toggleOptions();
     //     this.setState({

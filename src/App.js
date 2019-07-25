@@ -13,7 +13,6 @@ import Test from './containers/letconst';
 import TabsExample from './containers/TabsExample';
 import SampleTest from './containers/detector';
 import Finder from './containers/finder';
-import Tabs from './containers/tabs';
 import styled from 'styled-components'
 
 const Header = styled.header`
@@ -61,9 +60,15 @@ const App = () => {
                         hash: '#selectbox',
                         search: '?select=true'
                     }}>select</Link><br/>
+                    <Link to={{
+                        pathname: '/tabs',
+                        hash: '#selectbox',
+                        search: '?select=true'
+                    }}>Tabs</Link><br/>
                 </Header>
                 <Switch>
                     <Route exact path="/posts/:id/:username" component={PostItem}/>
+                    <Route exact path="/posts" component={Posts}/>
                     <Route exact path="/counter" component={Counter}/>
                     <Route exact path="/tabs" component={TabsExample}/>
                     <Route exact path="/shop" component={Shop}/>
@@ -71,9 +76,7 @@ const App = () => {
                     <Route exact path="/select" component={Select}/>
                     <Route exact path="/sort" component={Sort}/>
                     <Route exact path="/test" component={Test}/>
-                    <Route exact path="/tabs" component={Tabs}/>
                     <Route exact path="/profile" component={Profile}/>
-                    <Route exact path="/posts" component={Posts}/>
                     <Route exact path="/finder" component={Finder}/>
                     <Route exact path="/popup" component={SampleTest}/>
                     <Route exact path="/" component={Home}/>
@@ -82,7 +85,7 @@ const App = () => {
             </div>
         </BrowserRouter>
     );
-}
+};
 
 
 export default App;

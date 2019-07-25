@@ -13,6 +13,23 @@ const Section = styled.section`
   display: flex;
   text-align: right;
   justify-content: space-between;
+  h4 {
+  background-color: #e8e8e8;
+  color: #606060;
+  padding: 10px 10px;
+  border-radius: 5px;
+  }
+  p {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  h3 {
+      background-color: #20e020;
+    padding: 14px 27px;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 16px;
+  }
 `;
 
 class Shop extends Component {
@@ -81,17 +98,17 @@ class Shop extends Component {
                             return (
                                 <div>
                                     <p>{product.name}:{product.price}تومان</p>
-                                    <p>{product.qty}</p>
+                                    <p>{product.qty}:تعداد</p>
                                 </div>
                             )
                         })
                     }
-                    <h5>جمع کل</h5>
-                    {this.state.totalPrice}
+                    <h3>جمع کل:{this.state.totalPrice}تومان </h3>
+
                 </div>
                 {/*product list*/}
                 <div>
-                    <h5>لیست محصولات</h5>
+                    <h4>لیست محصولات</h4>
                     {
                         this.state.products.map(product => {
                             return (
@@ -108,7 +125,7 @@ class Shop extends Component {
                 </div>
                 {/*add product*/}
                 <div>
-                    <h5>افزودن محصول جدید</h5>
+                    <h4>افزودن محصول جدید</h4>
                     <Input
                         name="productName"
                         title="نام محصول"

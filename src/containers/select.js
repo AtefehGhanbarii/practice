@@ -20,7 +20,7 @@ export default class Select extends Component {
                 <SelectBox
                     options={options}
                     onSelect={this.onSelect}
-                    placeholder="select an option"
+                    placeholder="شهر را انتخاب کنید"
                 />
             </div>
         );

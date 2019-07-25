@@ -1,15 +1,27 @@
 import React from 'react';
-import { BrowserRouter, Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import styled from 'styled-components';
+
+const Div = styled.div`
+display: flex;
+justify-content: center;
+margin-top: 40px;
+a {
+padding: 12px 40px;
+text-decoration: none;
+font-weight: bold;
+}
+`;
 
 const Posts = () => {
     return (
-        <div>
-            <Link to="/posts/1/lklfk"> post 1</Link><br />
-            <Link to="/posts/2">post 2</Link><br />
-            <Link to="/posts/3">post 3</Link><br />
-        </div>
+        <Div>
+            <Link to="/posts/1/محصول اول"> پست اول</Link><br />
+            <Link to="/posts/2/محصول دوم">پست دوم</Link><br />
+            <Link to="/posts/3/محصول سوم">پست سوم</Link><br />
+        </Div>
     )
-}
+};
 
 
 export default Posts;

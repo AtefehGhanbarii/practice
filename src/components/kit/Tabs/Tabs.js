@@ -1,7 +1,94 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+// import { Button } from '../Button/Button';
+//
+// export default class Tabs extends Component {
+//     state = {
+//         tabs: []
+//     };
+//
+//     componentDidMount() {
+//         this.setState({
+//             tabs: this.props.tabs
+//         });
+//     }
+//
+//     // const tabs = [
+//     //     { name: 'tab1', id: 1, active: false },
+//     //     { name: 'tab2', id: 2, active: true },
+//     //     { name: 'tab3', id: 3, active: false },
+//     //     { name: 'tab4', id: 4, active: false },
+//     //     { name: 'tab5', id: 5, active: false }
+//     // ];
+//     //
+//
+//     // children
+//     // <Tab id={1}><Shop/></Tab>
+//     // <Tab id={2}><Counter/></Tab>
+//     // <Tab id={3}>salam 3</Tab>
+//     // <Tab id={4}>salam 4</Tab>
+//     // <Tab id={5}>salam 5</Tab>
+//
+//     renderTabContent = () => {
+//         const { children } = this.props;
+//         const { tabs } = this.state;
+//         return children.map(child => {
+//             const foundItem = tabs.find(tab => tab.id === child.props.id);
+//             if (foundItem && foundItem.active) {
+//                 return child;
+//             }
+//         });
+//     };
+//
+//     changeTab = (tab) => {
+//         const { tabs } = this.state;
+//         const result = tabs.map(tabItem => {
+//             if (tabItem.id === tab.id) {
+//                 return {
+//                     ...tabItem,
+//                     active: true
+//                 };
+//             }
+//             return {
+//                 ...tabItem,
+//                 active: false
+//             };
+//         });
+//         this.setState({
+//             tabs: result
+//         });
+//     };
+//
+//     renderTab = () => {
+//         const { tabs } = this.state;
+//         return tabs.map(tab => {
+//             return (
+//                 <Button
+//                     title={tab.name}
+//                     style={tab.active ? { backgroundColor: 'blue' } : {}}
+//                     onClick={() => this.changeTab(tab)}
+//                 />
+//             );
+//         });
+//     };
+//
+//     render() {
+//         return (
+//             <div>
+//                 {
+//                     this.renderTab()
+//                 }
+//                 {
+//                     this.renderTabContent()
+//                 }
+//             </div>
+//         );
+//     }
+// }
+
+import React, { Component } from "react";
 import { Button } from '../Button/Button';
 
-export default class Tabs extends Component {
+class Tabs extends Component {
     state = {
         tabs: []
     };
@@ -12,31 +99,22 @@ export default class Tabs extends Component {
         });
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log(' ============================================= ShouldComponentUpdate =============================================');
-        console.log(nextProps, 'this is nextProps');
-        console.log(nextState, 'this is nextState');
-        console.log(' ============================================= ShouldComponentUpdate =============================================');
-        return true;
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        console.log(' ============================================= componentWillUpdate =============================================');
-        console.log(nextProps, 'this is nextProps');
-        console.log(nextState, 'this is nextState');
-        console.log(' ============================================= componentWillUpdate =============================================');
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        console.log(' ============================================= ComponentDidUpdate =============================================');
-        console.log(prevProps, 'this is prevProps');
-        console.log(prevState, 'this is prevState');
-        console.log(' ============================================= ComponentDidUpdate =============================================');
-    }
-
-    componentWillMount() {
-        console.log('this is componentWillMount');
-    }
+    changeTab = (tab) => {
+        const { tabs } = this.state;
+        const result = tabs.map((tabItem) => {
+            if (tabItem.id === tab.id) {
+                return {
+                    ...tabItem,
+                    active: true
+                };
+            }
+            return {
+                ...tabItem,
+                active: false
+            };
+        });
+        this.setState({ tabs: result })
+    };
 
     renderTabContent = () => {
         const { children } = this.props;
@@ -49,44 +127,23 @@ export default class Tabs extends Component {
         });
     };
 
-    changeTab = (tab) => {
-        const { tabs } = this.state;
-        const result = tabs.map(tabItem => {
-            if (tabItem.id === tab.id) {
-                return {
-                    ...tabItem,
-                    active: true
-                };
-            }
-            return {
-                ...tabItem,
-                active: false
-            };
-        });
-        this.setState({
-            tabs: result
-        });
-    };
-
-    renderTab = () => {
-        const { tabs } = this.state;
-        return tabs.map(tab => {
-            return (
-                <Button
-                    title={tab.name}
-                    style={tab.active ? { backgroundColor: 'blue' } : {}}
-                    onClick={() => this.changeTab(tab)}
-                />
-            );
-        });
-    };
-
     render() {
-        console.log('rendreerrrrrrr');
+        console.log(this.props.children);
+        const { tabs } = this.state;
         return (
             <div>
                 {
-                    this.renderTab()
+                    tabs.map((tab) => {
+                        return (
+                            <div>
+                                <Button
+                                    title={tab.name}
+                                    onClick={() => this.changeTab(tab)}
+                                    style={tab.active ? { backgroundColor: 'blue' } : {}}
+                                />
+                            </div>
+                        );
+                    })
                 }
                 {
                     this.renderTabContent()
@@ -95,3 +152,22 @@ export default class Tabs extends Component {
         );
     }
 }
+
+
+export default Tabs;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Div = styled.div`
       background-color: #eee;
      text-align: center;
+     padding: 92px 10px;
     `;
 
 class Counter extends Component {
@@ -39,8 +40,8 @@ class Counter extends Component {
 
     render() {
         return (
-            <div>
-                Current count: {this.state.count}
+            <Div>
+                <h4>Current count: {this.state.count}</h4>
                 <hr/>
                 <Button
                     title="+"
@@ -52,7 +53,7 @@ class Counter extends Component {
                         onClick={this.handleDecrease}
                         disabled={this.state.count === 0}
                 />
-            </div>
+            </Div>
         );
     }
 }

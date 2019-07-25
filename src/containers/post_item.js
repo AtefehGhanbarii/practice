@@ -1,15 +1,24 @@
 import React from 'react';
-import { BrowserRouter, Router, Link } from "react-router-dom";
+import styled from 'styled-components';
+
+const Div = styled.div`
+  text-align: center;
+  p{
+  font-size: 16px;
+  font-weight: bold;
+  }
+`;
 
 const PostItem = (props) => {
-    console.log(props)
+    console.log(props);
     return(
-        <div>
-            <p>post item</p>
-            {props.match.params.id} - {props.match.params.username}
-        </div>
+        <Div>
+            <p>اطلاعات {props.match.params.username}</p>
+            کد: {props.match.params.id} <br />
+            {props.match.params.username}
+        </Div>
     )
-}
+};
 
 
 export default PostItem;

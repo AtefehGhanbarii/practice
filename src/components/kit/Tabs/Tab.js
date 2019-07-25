@@ -1,16 +1,30 @@
 import React, { Component } from 'react';
 
-export default class Tab extends Component {
-    componentWillUnmount() {
-        console.log('this is componnetWillUnmount');
-    }
-
-    render() {
-        const { children } = this.props;
+class Tab extends Component {
+    render(){
+        const {children} = this.props;
         return (
             <div>
-                {children}
+              {children}
             </div>
         );
     }
 }
+
+export default Tab;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

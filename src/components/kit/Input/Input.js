@@ -19,6 +19,7 @@ const InputSty = styled.input`
   border: 2px solid #eee;
   text-align: right;
   border-radius: 3px;
+  float: left;
   ...${props => props.style}
 `;
 
@@ -26,7 +27,6 @@ export const Input = (props: Props) => {
     return (
         <>
             {props.title}
-
             <InputSty
                 type={props.type}
                 name={props.name}
@@ -35,7 +35,6 @@ export const Input = (props: Props) => {
                 value={props.value}
             />
         </>
-
     );
 };
 
