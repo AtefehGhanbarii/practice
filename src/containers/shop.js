@@ -104,7 +104,6 @@ class Shop extends Component {
                         })
                     }
                     <h3>جمع کل:{this.state.totalPrice}تومان </h3>
-
                 </div>
                 {/*product list*/}
                 <div>

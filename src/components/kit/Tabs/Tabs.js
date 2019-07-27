@@ -113,7 +113,7 @@ class Tabs extends Component {
                 active: false
             };
         });
-        this.setState({ tabs: result })
+        this.setState({ tabs: result });
     };
 
     renderTabContent = () => {
@@ -127,9 +127,15 @@ class Tabs extends Component {
         });
     };
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const thisActiveTab = this.state.tabs.find(tab => tab.active);
+        const nextActiveTab = nextState.tabs.find(tab => tab.active);
+        return !(thisActiveTab && thisActiveTab.id === nextActiveTab.id);// prevent render the page
+    };
+
     render() {
-        console.log(this.props.children);
         const { tabs } = this.state;
+        console.log('render shod ');
         return (
             <div>
                 {
