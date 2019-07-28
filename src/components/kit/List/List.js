@@ -6,12 +6,8 @@ const Div = styled.div`
 border: 1px solid #000;
 background-color: #eee;
 display: flex;
-
 justify-content: space-around;
 direction: rtl;
-h5 {
-
-}
 `;
 
 const Wrapper = styled.div`
@@ -23,16 +19,29 @@ const Wrapper = styled.div`
 
 class List extends Component {
     render() {
-        const { Items } = this.props;
+        console.log(this.props);
+        const { items, changeStatus, handleShowEditModal, handleShowDeleteModal } = this.props;
         return (
-            Items.map((Item) => {
-                return (
-                   <ListItem />
-                );
-            })
+            <div>
+                {
+                    items.map((Item, index) => {
+                        return (
+                            <Div>
+                                <ListItem
+                                    id={index}
+                                    item={Item}
+                                    changeStatus={changeStatus}
+                                    handleShowEditModal={handleShowEditModal}
+                                    handleShowDeletModal={handleShowDeleteModal}
+                                />
+                            </Div>
+                        )
+                    })
+                }
+            </div>
         )
     }
 }
 
 
-export default List;
+export default List
