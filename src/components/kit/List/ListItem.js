@@ -23,11 +23,11 @@ class ListItem extends Component {
                     title="ثبت"
                 />
                 <Button
-                    onClick={() => this.props.handleShowEditModal(name, id)}
+                    onClick={() => this.props.handleShowEditModal(id)}
                     title="ویرایش"
                 />
                 <Button
-                    onClick={() => this.props.handleShowDeleteModal(id)}
+                    onClick={() => this.props.handleDeleteModal(id)}
                     title="حذف"
                 />
             </Div>

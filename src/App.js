@@ -1,8 +1,12 @@
 import React from 'react';
-import {BrowserRouter, Route, Link, NavLink, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Link, NavLink, Switch } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import createStore from './redux/create';
+import { Provider } from 'react-redux';
 import Product from './containers/product'
 import Counter from './containers/counter';
 import Home from './containers/Home';
+import ReduxShop from './containers/reduxShop';
 import Select from './containers/select';
 import Profile from './containers/profile';
 import Posts from './containers/posts';
@@ -14,6 +18,7 @@ import TabsExample from './containers/TabsExample';
 import SampleTest from './containers/detector';
 import Finder from './containers/finder';
 import TodoList from './containers/TodoList';
+import ReduxCounter from './containers/reduxCounter';
 import styled from 'styled-components'
 
 const Header = styled.header`
@@ -33,64 +38,82 @@ const Header = styled.header`
     }
 `;
 
+const { store, persistor } = createStore();
+
 const App = () => {
     return (
-        <BrowserRouter>
-            <div>
-                <Header>
-                    <NavLink
-                        to="/counter"
-                        activeStyle={{color: '#101010'}}
-                        activeClassName="selected"
-                    >
-                        Counter</NavLink><br/>
-                    <NavLink
-                        to="/posts"
-                        activeStyle={{color: '#101010'}}
-                        activeClassName="selected"
-                    >
-                        Posts</NavLink><br/>
-                    <NavLink
-                        to="/shop"
-                        activeStyle={{color: '#101010'}}
-                        activeClassName="selected"
-                    >
-                        Shop</NavLink><br/>
-                    <Link to={{
-                        pathname: '/select',
-                        hash: '#selectbox',
-                        search: '?select=true'
-                    }}>select</Link><br/>
-                    <Link to={{
-                        pathname: '/tabs',
-                        hash: '#selectbox',
-                        search: '?select=true'
-                    }}>Tabs</Link><br/>
-                    <Link to={{
-                        pathname: '/todolist',
-                        hash: '#selectbox',
-                        search: '?select=true'
-                    }}>To Do List</Link><br/>
-                </Header>
-                <Switch>
-                    <Route exact path="/posts/:id/:username" component={PostItem}/>
-                    <Route exact path="/posts" component={Posts}/>
-                    <Route exact path="/counter" component={Counter}/>
-                    <Route exact path="/tabs" component={TabsExample}/>
-                    <Route exact path="/shop" component={Shop}/>
-                    <Route exact path="/product" component={Product}/>
-                    <Route exact path="/select" component={Select}/>
-                    <Route exact path="/sort" component={Sort}/>
-                    <Route exact path="/test" component={Test}/>
-                    <Route exact path="/profile" component={Profile}/>
-                    <Route exact path="/finder" component={Finder}/>
-                    <Route exact path="/popup" component={SampleTest}/>
-                    <Route exact path="/todolist" component={TodoList}/>
-                    <Route exact path="/" component={Home}/>
-                    <Route exact render={() => <h3>oops 404</h3>}/>
-                </Switch>
-            </div>
-        </BrowserRouter>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <BrowserRouter>
+                    <div>
+                        <Header>
+                            <NavLink
+                                to="/counter"
+                                activeStyle={{ color: '#101010' }}
+                                activeClassName="selected"
+                            >
+                                Counter</NavLink><br/>
+                            <NavLink
+                                to="/posts"
+                                activeStyle={{ color: '#101010' }}
+                                activeClassName="selected"
+                            >
+                                Posts</NavLink><br/>
+                            <NavLink
+                                to="/shop"
+                                activeStyle={{ color: '#101010' }}
+                                activeClassName="selected"
+                            >
+                                Shop</NavLink><br/>
+                            <Link to={{
+                                pathname: '/select',
+                                hash: '#selectbox',
+                                search: '?select=true'
+                            }}>select</Link><br/>
+                            <Link to={{
+                                pathname: '/tabs',
+                                hash: '#selectbox',
+                                search: '?select=true'
+                            }}>Tabs</Link><br/>
+                            <Link to={{
+                                pathname: '/todolist',
+                                hash: '#selectbox',
+                                search: '?select=true'
+                            }}>To Do List</Link><br/>
+                            <Link to={{
+                                pathname: '/reduxcounter',
+                                hash: '#selectbox',
+                                search: '?select=true'
+                            }}>Redux Counter</Link><br/>
+                            <Link to={{
+                                pathname: '/reduxshop',
+                                hash: '#selectbox',
+                                search: '?select=true'
+                            }}>Redux Shop</Link><br/>
+                        </Header>
+                        <Switch>
+                            <Route exact path="/posts/:id/:username" component={PostItem}/>
+                            <Route exact path="/posts" component={Posts}/>
+                            <Route exact path="/counter" component={Counter}/>
+                            <Route exact path="/tabs" component={TabsExample}/>
+                            <Route exact path="/shop" component={Shop}/>
+                            <Route exact path="/product" component={Product}/>
+                            <Route exact path="/select" component={Select}/>
+                            <Route exact path="/sort" component={Sort}/>
+                            <Route exact path="/test" component={Test}/>
+                            <Route exact path="/profile" component={Profile}/>
+                            <Route exact path="/finder" component={Finder}/>
+                            <Route exact path="/popup" component={SampleTest}/>
+                            <Route exact path="/todolist" component={TodoList}/>
+                            <Route exact path="/reduxcounter" component={ReduxCounter}/>
+                            <Route exact path="/reduxshop" component={ReduxShop}/>
+                            <Route exact path="/" component={Home}/>
+                            <Route exact render={() => <h3>oops 404</h3>}/>
+                        </Switch>
+                    </div>
+                </BrowserRouter>
+            </PersistGate>
+        </Provider>
     );
 };
 

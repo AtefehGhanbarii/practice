@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 class List extends Component {
     render() {
         console.log(this.props);
-        const { items, changeStatus, handleShowEditModal, handleShowDeleteModal } = this.props;
+        const { items, changeStatus, handleShowEditModal, handleDeleteModal } = this.props;
         return (
             <div>
                 {
@@ -32,7 +32,7 @@ class List extends Component {
                                     item={Item}
                                     changeStatus={changeStatus}
                                     handleShowEditModal={handleShowEditModal}
-                                    handleShowDeletModal={handleShowDeleteModal}
+                                    handleDeleteModal={handleDeleteModal}
                                 />
                             </Div>
                         )
