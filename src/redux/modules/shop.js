@@ -20,17 +20,32 @@ export default function reducer(state = initialState, action = {}) {
             };
         case ADD_TO_BASKET:
             const foundItem = state.basket.find(basketItem => action.product.name === basketItem.name);
+            const newProducts = state.products.map((productItem) => {
+                const newStock = productItem.stock - 1;
+                if (newStock < 0 && productItem.name === action.product.name) {
+                    alert('Mojoodi kafi nist!!!');
+                    return productItem;
+                }
+                if (productItem.name === action.product.name) {
+                    return {
+                        ...productItem,
+                        stock: newStock
+                    }
+                }
+                return productItem;
+            });
             if (foundItem) {
                 const newBasket = state.basket.filter(basketItem => basketItem.name !== foundItem.name);
                 return {
                     ...state,
-                    basket: [...newBasket, { ...foundItem, qty: foundItem.qty + 1, stock: foundItem.stock - 1 }]
-                    // products:[...state.products, {  }]
+                    basket: [...newBasket, { ...foundItem, qty: foundItem.qty + 1 }],
+                    products: newProducts
                 };
             }
             return {
                 ...state,
-                basket: [...state.basket, { ...action.product, qty: 1 }]
+                basket: [...state.basket, { ...action.product, qty: 1 }],
+                products: newProducts
             };
         case CALCULATE:
             const result = state.basket.reduce((acc, current) => {
@@ -41,10 +56,6 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 totalPrice: result
-            };
-        case STOCK:
-            return {
-               ...state
             };
         default:
             return state;
@@ -71,7 +82,7 @@ export function calculate() {
     };
 }
 
-export function stock(){
+export function stock() {
     return {
         type: STOCK
     };
