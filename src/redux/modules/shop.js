@@ -1,14 +1,15 @@
 const ADD_TO_PRODUCTS = 'ADD_TO_PRODUCTS';
 const ADD_TO_BASKET = 'ADD_TO_BASKET';
 const CALCULATE = 'CALCULATE';
-const STOCK = 'STOCK';
+const ADD_STOCK = 'ADD_STOCK';
 
 const initialState = {
     totalPrice: 0,
     totalDiscount: 0,
     products: [],
     basket: [],
-    stock: 0
+    stock: 0,
+    showNotifyMeAlert: false
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -23,7 +24,7 @@ export default function reducer(state = initialState, action = {}) {
             const newProducts = state.products.map((productItem) => {
                 const newStock = productItem.stock - 1;
                 if (newStock < 0 && productItem.name === action.product.name) {
-                    alert('Mojoodi kafi nist!!!');
+                    alert('موجودی کافی نیست!!!');
                     return productItem;
                 }
                 if (productItem.name === action.product.name) {
@@ -49,13 +50,20 @@ export default function reducer(state = initialState, action = {}) {
             };
         case CALCULATE:
             const result = state.basket.reduce((acc, current) => {
-                acc += current.price * current.qty;
-                return acc;
-            }, 0);
+                const cost = acc.cost + (current.price * current.qty);
+                const discount = acc.discount + (current.discount * current.qty);
+                return { cost, discount };
+            }, { cost: 0, discount: 0 });
             console.log(result, 'this is result');
             return {
                 ...state,
-                totalPrice: result
+                totalPrice: result.cost,
+                totalDiscount: result.discount
+            };
+        case ADD_STOCK:
+            return {
+                ...state,
+                showNotifyMeAlert: true,
             };
         default:
             return state;
@@ -82,8 +90,8 @@ export function calculate() {
     };
 }
 
-export function stock() {
+export function addStock() {
     return {
-        type: STOCK
+        type: ADD_STOCK
     };
 }

@@ -22,7 +22,7 @@ class Counter extends Component {
         for (let i = 1; i <= length - 1; i++) {
             stepper = `${stepper}0`;
         }
-        console.log(stepper, 'this is stepper')
+        console.log(stepper, 'this is stepper');
         return Number(stepper);
     };
 

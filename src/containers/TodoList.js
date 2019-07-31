@@ -17,7 +17,8 @@ class TodoList extends Component {
 
     changeStatus = (id) => {
         const result = this.state.items.map((item, index) => {
-            if (index === id) {return {
+            if (index === id) {
+                return {
                     ...item,
                     status: item.status === 'done' ? 'pending' : 'done'
                 };
@@ -66,10 +67,9 @@ class TodoList extends Component {
         }
     };
 
-   editModalCancelHandler = () => {
+    editModalCancelHandler = () => {
         this.setState({ showEditModal: false });
     };
-
 
     handleSubmit = () => {
         const newItem = {
@@ -125,8 +125,6 @@ class TodoList extends Component {
                         onClick={this.handleEditName}
                     />
                 </Modal>
-
-
 
                 <Modal show={this.state.showDeleteModal} modalClosed={this.toggleDeleteModal}>
                     <button className='closeButModal' onClick={this.toggleDeleteModal}>close</button>

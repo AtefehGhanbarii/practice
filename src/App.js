@@ -48,23 +48,11 @@ const App = () => {
                     <div>
                         <Header>
                             <NavLink
-                                to="/counter"
-                                activeStyle={{ color: '#101010' }}
-                                activeClassName="selected"
-                            >
-                                Counter</NavLink><br/>
-                            <NavLink
                                 to="/posts"
                                 activeStyle={{ color: '#101010' }}
                                 activeClassName="selected"
                             >
                                 Posts</NavLink><br/>
-                            <NavLink
-                                to="/shop"
-                                activeStyle={{ color: '#101010' }}
-                                activeClassName="selected"
-                            >
-                                Shop</NavLink><br/>
                             <Link to={{
                                 pathname: '/select',
                                 hash: '#selectbox',
@@ -90,6 +78,12 @@ const App = () => {
                                 hash: '#selectbox',
                                 search: '?select=true'
                             }}>Redux Shop</Link><br/>
+                            <NavLink
+                                to="/shop"
+                                activeStyle={{ color: '#101010' }}
+                                activeClassName="selected"
+                            >
+                                Shop</NavLink><br/>
                         </Header>
                         <Switch>
                             <Route exact path="/posts/:id/:username" component={PostItem}/>
