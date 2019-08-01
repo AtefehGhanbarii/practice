@@ -2,6 +2,7 @@ const ADD_TO_PRODUCTS = 'ADD_TO_PRODUCTS';
 const ADD_TO_BASKET = 'ADD_TO_BASKET';
 const CALCULATE = 'CALCULATE';
 const ADD_STOCK = 'ADD_STOCK';
+const EDIT_PRODUCT = 'EDIT_PRODUCT';
 
 const initialState = {
     totalPrice: 0,
@@ -65,6 +66,11 @@ export default function reducer(state = initialState, action = {}) {
                 ...state,
                 showNotifyMeAlert: true,
             };
+        case EDIT_PRODUCT:
+            return {
+                ...state,
+                products: [...state.products.filter(product => product.name !== action.newProduct.oldName), action.newProduct]
+            };
         default:
             return state;
     }
@@ -93,5 +99,12 @@ export function calculate() {
 export function addStock() {
     return {
         type: ADD_STOCK
+    };
+}
+
+export function editProdcut(newProduct) {
+    return {
+        type: EDIT_PRODUCT,
+        newProduct
     };
 }

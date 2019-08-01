@@ -81,39 +81,47 @@ export default class Select extends React.Component {
     //     this.props.onSelect(option);
     // };
 
-    handleSelect = (option) => {
-        const hasItem = this.state.selected.find((item) => item.name === option.name);
-        console.log(hasItem, 'hasitem');
-        if (hasItem) {
-            this.setState({
-                selected: this.state.selected.filter(item => item.name !== option.name)
-            })
+    handleSelect = (option, multiSelect) => {
+        if (multiSelect) {
+            const hasItem = this.state.selected.find((item) => item.name === option.name);
+            console.log(hasItem, 'hasitem');
+            if (hasItem) {
+                this.setState({
+                    selected: this.state.selected.filter(item => item.name !== option.name)
+                })
+            } else {
+                this.setState({
+                    selected: this.state.selected.concat(option)
+                })
+            }
         } else {
             this.setState({
-                selected: this.state.selected.concat(option)
-            })
+                selected: [option]
+            });
         }
         this.props.onSelect(option);
     };
 
     render() {
         console.log(this.state.selected);
-        const { options, placeholder } = this.props;
+        const { options, placeholder, multiSelect } = this.props;
         const { show, selected } = this.state;
         return (
             <Container>
                 <Button onClick={this.toggleOptions}>
-                    {selected && selected.length ?
-                        selected.map(item => {
-                            return <p>{item.name}</p>
-                        })
-                        : placeholder}
+                    {
+                        selected && selected.length ?
+                            selected.map(item => {
+                                return <p>{item.name}</p>
+                            })
+                            : placeholder
+                    }
                 </Button>
                 <Wrapper>
                     {
                         show ? options.map(option => {
                             return (
-                                <OptionWrapper onClick={() => this.handleSelect(option)}>
+                                <OptionWrapper onClick={() => this.handleSelect(option, multiSelect)}>
                                     {option.name}
                                 </OptionWrapper>
                             );

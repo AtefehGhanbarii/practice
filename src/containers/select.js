@@ -21,6 +21,7 @@ export default class Select extends Component {
                     options={options}
                     onSelect={this.onSelect}
                     placeholder="شهر را انتخاب کنید"
+                    multiSelect
                 />
             </div>
         );

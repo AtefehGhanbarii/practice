@@ -9,7 +9,7 @@ export default function create() {
     const persistConfig = {
         key: 'root',
         storage: storage,
-        whitelist: ['counter'],
+        whitelist: ['counter', 'shop'],
         blacklist: []
     };
 

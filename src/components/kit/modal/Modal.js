@@ -6,11 +6,12 @@ const Div = styled.div`
     position: fixed;
     z-index: 500;
     background-color: white;
+    display: inline-grid;
     width: 70%;
     border: 1px solid #ccc;
     padding: 16px;
     left: 15%;
-    top: 30%;
+    top: 10%;
     box-sizing: border-box;
     border-radius: 10px;
     transition: all 0.3s ease-out;

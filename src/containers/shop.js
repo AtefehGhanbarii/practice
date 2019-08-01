@@ -153,7 +153,6 @@ class Shop extends Component {
     }
 }
 
-
 export default Shop;
 
 

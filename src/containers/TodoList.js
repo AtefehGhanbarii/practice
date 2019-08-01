@@ -12,7 +12,8 @@ class TodoList extends Component {
         showEditModal: false,
         showDeleteModal: false,
         name: '',
-        editedId: null
+        editedId: null,
+        deletingId: null
     };
 
     changeStatus = (id) => {
@@ -36,9 +37,10 @@ class TodoList extends Component {
         });
     };
 
-    toggleDeleteModal = () => {
+    toggleDeleteModal = (deletingId) => {
         this.setState({
             showDeleteModal: !this.state.showDeleteModal,
+            deletingId
         });
     };
 
@@ -64,6 +66,16 @@ class TodoList extends Component {
                 items: editedItems,
                 showEditModal: false
             });
+        }
+    };
+
+    handleDeleteItem = () => {
+        let shouldUpdateState = true;
+        const delItems = this.state.items.filter((item, index) => {
+
+        });
+        if (shouldUpdateState) {
+
         }
     };
 
@@ -132,7 +144,7 @@ class TodoList extends Component {
                     <p>آیا برای حذف مطمن هستید؟</p>
                     <Button
                         title='بله'
-                        onClick={this.handleِِDelete}
+                        onClick={this.handleDeleteItem}
                     />
                     <Button
                         title='خیر'

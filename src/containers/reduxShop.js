@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToProducts, addToBasket, calculate, addStock } from '../redux/modules/shop';
+import { addToProducts, addToBasket, calculate, addStock, editProdcut } from '../redux/modules/shop';
 import { Button } from '../components/kit/Button/Button';
 import styled from 'styled-components';
 import { Input } from '../components/kit/Input/Input';
 import Modal from '../components/kit/modal/Modal';
+import SelectBox from '../components/kit/Select/SelectBox';
 
 const Section = styled.section`
   //background-color: #eee;
@@ -66,7 +67,11 @@ class ReduxShop extends Component {
         productPrice: '',
         productStock: 0,
         showProductModal: false,
-        productDiscount: 0
+        showEditModal: false,
+        productDiscount: 0,
+        discountType: [],
+        newStock: 0,
+        editingProduct: {}
     };
 
     handleChange = (event) => {
@@ -79,13 +84,30 @@ class ReduxShop extends Component {
         });
     };
 
+    toggleEditModal = (editingProduct) => {
+        this.setState({
+            showEditModal: !this.state.showEditModal,
+            productStock: editingProduct.stock,
+            productName: editingProduct.name,
+            editingProduct
+        });
+    };
+
     handleAddProduct = () => {
         //make product here
+        console.log(this.state.discountType.name, 'this is idddddddd');
+        console.log(this.state.productDiscount, 'this is discount amount');
+        const { discountType, productDiscount, productName, productPrice, productStock } = this.state;
+        let result = productDiscount;
+        if (discountType === 'درصدی') {
+            result = (productPrice * productDiscount) / 100;
+            console.log(result, 'this is resulttt');
+        }
         const newProduct = {
-            name: this.state.productName,
-            price: this.state.productPrice,
-            stock: this.state.productStock,
-            discount: this.state.productDiscount,
+            name: productName,
+            price: productPrice,
+            stock: productStock,
+            discount: result
         };
         const foundRepeatItem = this.props.products.find(product => product.name === newProduct.name);
         if (foundRepeatItem) {
@@ -96,18 +118,67 @@ class ReduxShop extends Component {
         console.log(this.state.products, 'this is products')
     };
 
+    renderProductEditModal = () => {
+        return (
+            <Modal show={this.state.showEditModal} modalClosed={this.toggleEditModal}>
+                <span className='closeButModal' onClick={this.toggleEditModal}>close</span>
+                <br/>
+                <h4>ویرایش کالا</h4>
+                <Input
+                    title="نام محصول"
+                    name="productName"
+                    defaultValue={this.state.productName}
+                    value={this.state.productName}
+                    placeholder="نام محصول"
+                    onChange={this.handleChange}
+                />
+                <Input
+                    title="موجودی"
+                    name="productStock"
+                    value={this.state.productStock}
+                    placeholder="موجودی محصول"
+                    onChange={this.handleChange}
+                />
+                <Button
+                    title='ثبت ویرایش'
+                    onClick={this.handleEditProduct}
+                />
+            </Modal>
+        );
+
+    };
+
+    handleEditProduct = () => {
+        const { productName, productStock, editingProduct } = this.state;
+        const newProduct = {
+            ...editingProduct,
+            name: productName,
+            stock: productStock,
+            oldName: editingProduct.name
+        };
+        this.props.editProdcut(newProduct);
+    };
+
+    onSelect = (selectedItem) => {
+        console.log(selectedItem, 'this is seleecteed item in container');
+        this.setState({ discountType: selectedItem.name });
+    };
+
     render() {
+        const options = [
+            { name: 'درصدی', value: 1 },
+            { name: 'مقداری', value: 2 }
+        ];
         const { products, basket, totalPrice, showNotifyMeAlert, totalDiscount } = this.props;
-        console.log(this.props.products);
         return (
             <>
                 <Section>
                     <Button
                         title="افزودن محصول"
                         onClick={this.toggleProductModal}/>
-
+                    {/*Modal Add Product*/}
                     <Modal show={this.state.showProductModal} modalClosed={this.toggleProductModal}>
-                        <button className='closeButModal' onClick={this.toggleProductModal}>close</button>
+                        <span className='closeButModal' onClick={this.toggleProductModal}>بستن</span>
                         <p>افزودن محصول جدید</p>
                         <Input
                             title="نام محصول"
@@ -124,17 +195,23 @@ class ReduxShop extends Component {
                             onChange={this.handleChange}
                         />
                         <Input
-                            title="تخفیف"
-                            name="productDiscount"
-                            value={this.state.productDiscount}
-                            placeholder="تخفیف محصول"
-                            onChange={this.handleChange}
-                        />
-                        <Input
                             title="موجودی"
                             name="productStock"
                             value={this.state.productStock}
                             placeholder="موجودی محصول"
+                            onChange={this.handleChange}
+                        />
+                        <SelectBox
+                            options={options}
+                            onSelect={this.onSelect}
+                            placeholder="انتخاب نوع تخفیف"
+                            multiSelect={false}
+                        />
+                        <Input
+                            title="مقدار تخفیف"
+                            name="productDiscount"
+                            value={this.state.productDiscount}
+                            placeholder="تخفیف محصول"
                             onChange={this.handleChange}
                         />
                         <Button
@@ -142,6 +219,8 @@ class ReduxShop extends Component {
                             onClick={this.handleAddProduct}
                         />
                     </Modal>
+                    {/*Modal Edit Product*/}
+                    {this.renderProductEditModal()}
                     <h4>لیست محصولات</h4>
                     <DivProduct>
                         {/*products*/}
@@ -164,6 +243,10 @@ class ReduxShop extends Component {
                                                     // alert('اطلاع داده شد');
                                                 }
                                             }}
+                                        />
+                                        <Button
+                                            title="ویرایش"
+                                            onClick={() => this.toggleEditModal(product)}
                                         />
                                     </section>
                                 )
@@ -207,7 +290,8 @@ export default connect(state => ({
     addToProducts,
     addToBasket,
     calculate,
-    addStock
+    addStock,
+    editProdcut
 })(ReduxShop);
 
 

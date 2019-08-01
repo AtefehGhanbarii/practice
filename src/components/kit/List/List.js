@@ -32,7 +32,7 @@ class List extends Component {
                                     item={Item}
                                     changeStatus={changeStatus}
                                     handleShowEditModal={handleShowEditModal}
-                                    handleDeleteModal={handleDeleteModal}
+                                    handleDeleteModal={() => handleDeleteModal(index)}
                                 />
                             </Div>
                         )
