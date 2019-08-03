@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { addToProducts, addToBasket, calculate, addStock, editProdcut } from '../redux/modules/shop';
-import { Button } from '../components/kit/Button/Button';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {addToProducts, addToBasket, calculate, addStock, editProdcut, deleteFromBasket} from '../redux/modules/shop';
+import {Button} from '../components/kit/Button/Button';
 import styled from 'styled-components';
-import { Input } from '../components/kit/Input/Input';
+import {Input} from '../components/kit/Input/Input';
 import Modal from '../components/kit/modal/Modal';
 import SelectBox from '../components/kit/Select/SelectBox';
 
@@ -71,11 +71,16 @@ class ReduxShop extends Component {
         productDiscount: 0,
         discountType: [],
         newStock: 0,
-        editingProduct: {}
+        editingProduct: {},
+        deletingId: null
     };
 
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({[event.target.name]: event.target.value});
+    };
+
+    onSelect = (selectedItem) => {
+        this.setState({discountType: selectedItem.name});
     };
 
     toggleProductModal = () => {
@@ -84,20 +89,11 @@ class ReduxShop extends Component {
         });
     };
 
-    toggleEditModal = (editingProduct) => {
-        this.setState({
-            showEditModal: !this.state.showEditModal,
-            productStock: editingProduct.stock,
-            productName: editingProduct.name,
-            editingProduct
-        });
-    };
-
     handleAddProduct = () => {
         //make product here
         console.log(this.state.discountType.name, 'this is idddddddd');
         console.log(this.state.productDiscount, 'this is discount amount');
-        const { discountType, productDiscount, productName, productPrice, productStock } = this.state;
+        const {discountType, productDiscount, productName, productPrice, productStock} = this.state;
         let result = productDiscount;
         if (discountType === 'درصدی') {
             result = (productPrice * productDiscount) / 100;
@@ -145,11 +141,19 @@ class ReduxShop extends Component {
                 />
             </Modal>
         );
+    };
 
+    toggleEditModal = (editingProduct) => {
+        this.setState({
+            showEditModal: !this.state.showEditModal,
+            productStock: editingProduct.stock,
+            productName: editingProduct.name,
+            editingProduct
+        });
     };
 
     handleEditProduct = () => {
-        const { productName, productStock, editingProduct } = this.state;
+        const {productName, productStock, editingProduct} = this.state;
         const newProduct = {
             ...editingProduct,
             name: productName,
@@ -159,17 +163,20 @@ class ReduxShop extends Component {
         this.props.editProdcut(newProduct);
     };
 
-    onSelect = (selectedItem) => {
-        console.log(selectedItem, 'this is seleecteed item in container');
-        this.setState({ discountType: selectedItem.name });
+    deleteBasketItem = (product) => {
+        this.setState({deletingId: product.name});
+        console.log(this.state.deletingId, 'this is thstt');
+        const delItem = this.props.basket.find(item => item.name === this.state.deletingId);
+        console.log(delItem, 'delet from basket')
     };
 
     render() {
         const options = [
-            { name: 'درصدی', value: 1 },
-            { name: 'مقداری', value: 2 }
+            {name: 'درصدی', value: 1},
+            {name: 'مقداری', value: 2}
         ];
-        const { products, basket, totalPrice, showNotifyMeAlert, totalDiscount } = this.props;
+        const {products, basket, totalPrice, showNotifyMeAlert, totalDiscount, deleteFromBasket} = this.props;
+        console.log(this.props, '<==////')
         return (
             <>
                 <Section>
@@ -263,6 +270,13 @@ class ReduxShop extends Component {
                                         <p>نام محصول: {basketItem.name}</p>
                                         <p>{basketItem.qty} :تعداد </p>
                                         </span>
+                                        <Button
+                                            title="حذف"
+                                            onClick={() => {
+                                                deleteFromBasket(basketItem);
+                                                this.props.calculate()
+                                            }}
+                                        />
                                     </section>
                                 );
                             })
@@ -291,7 +305,8 @@ export default connect(state => ({
     addToBasket,
     calculate,
     addStock,
-    editProdcut
+    editProdcut,
+    deleteFromBasket
 })(ReduxShop);
 
 

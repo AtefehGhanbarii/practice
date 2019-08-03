@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { Input } from '../components/kit/Input/Input';
-import { Button } from "../components/kit/Button/Button";
+import React, {Component} from 'react';
+import {Input} from '../components/kit/Input/Input';
+import {Button} from "../components/kit/Button/Button";
 import List from '../components/kit/List/List';
 import Modal from '../components/kit/modal/Modal'
+import {logicalExpression} from "@babel/types";
 
 class TodoList extends Component {
     state = {
@@ -26,7 +27,7 @@ class TodoList extends Component {
             }
             return item;
         });
-        this.setState({ items: result });
+        this.setState({items: result});
     };
 
     handleShowEditModal = (id) => {
@@ -37,10 +38,10 @@ class TodoList extends Component {
         });
     };
 
-    toggleDeleteModal = (deletingId) => {
+    toggleDeleteModal = (id) => {
         this.setState({
             showDeleteModal: !this.state.showDeleteModal,
-            deletingId
+            deletingId: id
         });
     };
 
@@ -70,17 +71,14 @@ class TodoList extends Component {
     };
 
     handleDeleteItem = () => {
-        let shouldUpdateState = true;
-        const delItems = this.state.items.filter((item, index) => {
+        const delItem = this.state.items.filter((item, index) => index !== this.state.deletingId);
+        this.setState({items: delItem, showDeleteModal: false})
 
-        });
-        if (shouldUpdateState) {
 
-        }
     };
 
     editModalCancelHandler = () => {
-        this.setState({ showEditModal: false });
+        this.setState({showEditModal: false});
     };
 
     handleSubmit = () => {
@@ -99,7 +97,7 @@ class TodoList extends Component {
     };
 
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({[event.target.name]: event.target.value});
     };
 
     render() {

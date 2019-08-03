@@ -3,6 +3,7 @@ const ADD_TO_BASKET = 'ADD_TO_BASKET';
 const CALCULATE = 'CALCULATE';
 const ADD_STOCK = 'ADD_STOCK';
 const EDIT_PRODUCT = 'EDIT_PRODUCT';
+const DELETE_FROM_BASKET = 'DELETE_FROM_BASKET';
 
 const initialState = {
     totalPrice: 0,
@@ -48,6 +49,16 @@ export default function reducer(state = initialState, action = {}) {
                 ...state,
                 basket: [...state.basket, { ...action.product, qty: 1 }],
                 products: newProducts
+            };
+        case DELETE_FROM_BASKET:
+            const delItem = state.basket.find(bItem => action.basketItem.name === bItem.name);
+            const addQty = state.products.find(qItem => qItem.name === delItem.name);
+            addQty.stock += delItem.qty;
+            const newBasket = state.basket.filter(basketItem => action.basketItem.name !== basketItem.name);
+            console.log(newBasket, 'this is new basket');
+            return {
+                ...state,
+                basket: newBasket
             };
         case CALCULATE:
             const result = state.basket.reduce((acc, current) => {
@@ -107,4 +118,11 @@ export function editProdcut(newProduct) {
         type: EDIT_PRODUCT,
         newProduct
     };
+}
+
+export function deleteFromBasket(basketItem) {
+    return {
+        type: DELETE_FROM_BASKET,
+        basketItem
+    }
 }
