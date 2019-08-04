@@ -11,10 +11,10 @@ const Div = styled.div`
 
 const PostItem = (props) => {
     console.log(props);
-    return(
+    return (
         <Div>
             <p>اطلاعات {props.match.params.username}</p>
-            کد: {props.match.params.id} <br />
+            کد: {props.match.params.id} <br/>
             {props.match.params.username}
         </Div>
     )

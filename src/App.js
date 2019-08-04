@@ -9,8 +9,8 @@ import Home from './containers/Home';
 import ReduxShop from './containers/reduxShop';
 import Select from './containers/select';
 import Profile from './containers/profile';
-import Posts from './containers/posts';
-import PostItem from './containers/post_item';
+import Posts from './containers/Posts';
+import PostItem from './containers/postItem';
 import Shop from './containers/shop';
 import Sort from './containers/sort';
 import Test from './containers/letconst';
@@ -19,7 +19,12 @@ import SampleTest from './containers/detector';
 import Finder from './containers/finder';
 import TodoList from './containers/TodoList';
 import ReduxCounter from './containers/reduxCounter';
-import styled from 'styled-components'
+import ApiExample from './containers/users';
+import Comments from './containers/comments';
+import styled from 'styled-components';
+import UserItem from "./containers/userItem";
+import Posts from "./containers/postss";
+import PotsItem from "./containers/postItemm";
 
 const Header = styled.header`
     display: flex;
@@ -47,12 +52,12 @@ const App = () => {
                 <BrowserRouter>
                     <div>
                         <Header>
-                            <NavLink
-                                to="/posts"
-                                activeStyle={{ color: '#101010' }}
-                                activeClassName="selected"
-                            >
-                                Posts</NavLink><br/>
+                            {/*<NavLink*/}
+                            {/*    to="/posts"*/}
+                            {/*    activeStyle={{ color: '#101010' }}*/}
+                            {/*    activeClassName="selected"*/}
+                            {/*>*/}
+                            {/*    Posts</NavLink><br/>*/}
                             <Link to={{
                                 pathname: '/select',
                                 hash: '#selectbox',
@@ -86,10 +91,17 @@ const App = () => {
                                 Shop</NavLink><br/>
                         </Header>
                         <Switch>
-                            <Route exact path="/posts/:id/:username" component={PostItem}/>
-                            <Route exact path="/posts" component={Posts}/>
+                            {/*<Route exact path="/posts/:id/:username" component={PostItem}/>*/}
+                            {/*<Route exact path="/posts" component={Posts}/>*/}
                             <Route exact path="/counter" component={Counter}/>
                             <Route exact path="/tabs" component={TabsExample}/>
+                            <Route exact path="/api/:id" component={UserItem}/>
+                            <Route exact path="/api" component={ApiExample}/>
+
+                            <Route exact path="/postss/:id" component={PostItem}/>
+                            <Route exact path="/postss" component={Posts}/>
+
+                            <Route exact path="/comments" component={Comments}/>
                             <Route exact path="/shop" component={Shop}/>
                             <Route exact path="/product" component={Product}/>
                             <Route exact path="/select" component={Select}/>
