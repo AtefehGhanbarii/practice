@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { increament, decreament, resetCounter } from '../redux/modules/counter';
 import { Button } from "../components/kit/Button/Button";
 
-
 class ReduxCounter extends Component {
     render() {
         console.log(this.props);

@@ -15,19 +15,18 @@ export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE';
 
 const initialState = {
     posts: {
-        posts: [],
+        postsData: [],
         loading: false,
         loaded: false,
         error: null
     },
     post: {
-        post: {},
+        postData: {},
         loading: false,
         loaded: false,
         error: null
     },
     createPost: {
-        post: {},
         loading: false,
         loaded: false,
         error: null
@@ -40,7 +39,7 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 posts: {
-                    ...state.posts,
+                    ...state.postsData,
                     loading: true
                 }
             };
@@ -58,7 +57,7 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 posts: {
-                    ...state.posts,
+                    ...state.postsData,
                     error: action.error,
                     loading: false
                 }
@@ -78,7 +77,7 @@ export default function reducer(state = initialState, action = {}) {
                     ...state.post,
                     loading: false,
                     loaded: true,
-                    post: action.post
+                    postData: action.post
                 }
             };
         case LOAD_POST_FAILURE:
@@ -94,7 +93,7 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 createPost: {
-                    ...state.createUser,
+                    ...state.createPost,
                     loading: true
                 }
             };
@@ -106,6 +105,10 @@ export default function reducer(state = initialState, action = {}) {
                     loading: false,
                     loaded: true,
                     createPost: action.createPost
+                },
+                posts: {
+                    ...state.posts,
+                    posts: [action.createPost, ...state.posts.posts]
                 }
             };
         case CREATE_POST_FAILURE:
@@ -198,5 +201,15 @@ export function* watchLoadPost({ postId }) {
         yield put(loadPostSuccess(response.data));
     } catch (e) {
         yield put(loadPostFailure(e));
+    }
+}
+
+export function* watchCreatePost({ createPost }) {
+    try {
+        const response = yield axios.post('https://jsonplaceholder.typicode.com/posts', { createPost });
+        console.log(response, 'this is response');
+        yield put(createPostSuccess(response.data.createPost));
+    } catch (e) {
+        yield put(createPostFailure(e));
     }
 }

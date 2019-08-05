@@ -9,8 +9,8 @@ import Home from './containers/Home';
 import ReduxShop from './containers/reduxShop';
 import Select from './containers/select';
 import Profile from './containers/profile';
-import Posts from './containers/Posts';
-import PostItem from './containers/postItem';
+// import Posts from './containers/Posts';
+// import PostItem from './containers/postItem';
 import Shop from './containers/shop';
 import Sort from './containers/sort';
 import Test from './containers/letconst';
@@ -23,7 +23,7 @@ import ApiExample from './containers/users';
 import Comments from './containers/comments';
 import styled from 'styled-components';
 import UserItem from "./containers/userItem";
-import Posts from "./containers/postss";
+import PostData from "./containers/postss";
 import PotsItem from "./containers/postItemm";
 
 const Header = styled.header`
@@ -91,16 +91,14 @@ const App = () => {
                                 Shop</NavLink><br/>
                         </Header>
                         <Switch>
-                            {/*<Route exact path="/posts/:id/:username" component={PostItem}/>*/}
+
                             {/*<Route exact path="/posts" component={Posts}/>*/}
                             <Route exact path="/counter" component={Counter}/>
                             <Route exact path="/tabs" component={TabsExample}/>
-                            <Route exact path="/api/:id" component={UserItem}/>
-                            <Route exact path="/api" component={ApiExample}/>
-
-                            <Route exact path="/postss/:id" component={PostItem}/>
-                            <Route exact path="/postss" component={Posts}/>
-
+                            <Route exact path="/users/:id" component={UserItem}/>
+                            <Route exact path="/users" component={ApiExample}/>
+                            <Route exact path="/postss" component={PostData}/>
+                            <Route exact path="/postss/:id" component={PotsItem}/>
                             <Route exact path="/comments" component={Comments}/>
                             <Route exact path="/shop" component={Shop}/>
                             <Route exact path="/product" component={Product}/>

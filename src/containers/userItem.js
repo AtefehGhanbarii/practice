@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { loadUser } from '../redux/modules/users';
 
-class UserItem extends Component {
+class Item extends Component {
     componentDidMount() {
         this.props.loadUser(this.props.match.params.id);
     }
@@ -26,4 +26,4 @@ export default withRouter(connect(state => ({
     error: state.users.user.error
 }), {
     loadUser
-})(UserItem));
+})(Item));
