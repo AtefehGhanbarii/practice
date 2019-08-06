@@ -69,7 +69,7 @@ class PostData extends Component {
 }
 
 export default connect(state => ({
-    posts: state.posts.posts.posts,
+    posts: state.posts.posts.data,
     loading: state.posts.posts.loading,
     loaded: state.posts.posts.loaded,
     error: state.posts.posts.error

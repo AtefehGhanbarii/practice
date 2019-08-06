@@ -13,9 +13,13 @@ export const CREATE_POST = 'CREATE_POST';
 export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS';
 export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE';
 
+export const DELETE_POST = 'DELETE_POST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+
 const initialState = {
     posts: {
-        postsData: [],
+        data: [],
         loading: false,
         loaded: false,
         error: null
@@ -31,6 +35,11 @@ const initialState = {
         loaded: false,
         error: null
     },
+    deletePost: {
+        loading: false,
+        loaded: true,
+        error: null
+    }
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -39,7 +48,7 @@ export default function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 posts: {
-                    ...state.postsData,
+                    ...state.posts,
                     loading: true
                 }
             };
@@ -50,14 +59,14 @@ export default function reducer(state = initialState, action = {}) {
                     ...state.posts,
                     loading: false,
                     loaded: true,
-                    posts: action.posts
+                    data: action.posts
                 }
             };
         case LOAD_POSTS_FAILURE:
             return {
                 ...state,
                 posts: {
-                    ...state.postsData,
+                    ...state.posts,
                     error: action.error,
                     loading: false
                 }
@@ -104,11 +113,11 @@ export default function reducer(state = initialState, action = {}) {
                     ...state.createPost,
                     loading: false,
                     loaded: true,
-                    createPost: action.createPost
+                    createPost: action.post
                 },
                 posts: {
                     ...state.posts,
-                    posts: [action.createPost, ...state.posts.posts]
+                    data: [action.post, ...state.posts.data]
                 }
             };
         case CREATE_POST_FAILURE:
@@ -116,6 +125,36 @@ export default function reducer(state = initialState, action = {}) {
                 ...state,
                 createPost: {
                     ...state.createPost,
+                    error: action.error
+                }
+            };
+        case DELETE_POST:
+            return {
+                ...state,
+                deletePost: {
+                    ...state.deletePost,
+                    loading: true
+                }
+            };
+        case DELETE_POST_SUCCESS:
+            return {
+                ...state,
+                deletePost: {
+                    ...state.deletePost,
+                    loading: false,
+                    loaded: true,
+                    deletePost: action.postId
+                },
+                posts: {
+                    ...state.posts,
+                    data: state.data.posts.filter(item => item.id !== action.postId)
+                }
+            };
+        case DELETE_POST_FAILURE:
+            return {
+                ...state,
+                deletePost: {
+                    ...state.deletePost,
                     error: action.error
                 }
             };
@@ -172,10 +211,10 @@ export function createPost(createPost) {
     };
 }
 
-export function createPostSuccess(createPost) {
+export function createPostSuccess(post) {
     return {
         type: CREATE_POST_SUCCESS,
-        createPost
+        post
     };
 }
 
@@ -184,6 +223,27 @@ export function createPostFailure(error) {
         type: CREATE_POST_FAILURE,
         error
     };
+}
+
+export function deletePost(postId) {
+    return {
+        type: DELETE_POST,
+        postId
+    };
+}
+
+export function deletePostSuccess(postId) {
+    return {
+        type: DELETE_POST_SUCCESS,
+        postId
+    };
+}
+
+export function deletePostFailure(error) {
+    return {
+        type: DELETE_POST_FAILURE,
+        error
+    }
 }
 
 export function* watchLoadPosts() {
@@ -206,10 +266,19 @@ export function* watchLoadPost({ postId }) {
 
 export function* watchCreatePost({ createPost }) {
     try {
-        const response = yield axios.post('https://jsonplaceholder.typicode.com/posts', { createPost });
-        console.log(response, 'this is response');
-        yield put(createPostSuccess(response.data.createPost));
+        const response = yield axios.post('https://jsonplaceholder.typicode.com/posts', { ...createPost });
+        console.log(response, 'this is response after post');
+        yield put(createPostSuccess(response.data));
     } catch (e) {
         yield put(createPostFailure(e));
+    }
+}
+
+export function* watchDeletePost({ postId }) {
+    try {
+        yield axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+        yield put(deletePostSuccess(postId));
+    } catch (e) {
+        yield put(deletePostFailure(e));
     }
 }

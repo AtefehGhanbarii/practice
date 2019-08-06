@@ -72,8 +72,6 @@ class TodoList extends Component {
     handleDeleteItem = () => {
         const delItem = this.state.items.filter((item, index) => index !== this.state.deletingId);
         this.setState({ items: delItem, showDeleteModal: false })
-
-
     };
 
     editModalCancelHandler = () => {

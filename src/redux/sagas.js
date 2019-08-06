@@ -8,6 +8,7 @@ import { LOAD_COMMENTS, watchLoadComments } from './modules/comments';
 import { LOAD_POSTS, watchLoadPosts } from './modules/posts';
 import { LOAD_POST, watchLoadPost } from './modules/posts';
 import { CREATE_POST, watchCreatePost } from './modules/posts';
+import { DELETE_POST, watchDeletePost } from './modules/posts';
 
 export default function* root(store) {
     yield all([
@@ -18,6 +19,7 @@ export default function* root(store) {
         takeEvery(LOAD_POSTS, watchLoadPosts),
         takeEvery(LOAD_POST, watchLoadPost),
         takeEvery(CREATE_POST, watchCreatePost),
+        takeEvery(DELETE_POST, watchDeletePost),
         // takeEvery(RESET_COUNTER, watchResetCounter)
     ]);
 }
