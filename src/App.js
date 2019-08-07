@@ -41,6 +41,15 @@ const Header = styled.header`
     border-radius: 8px;
     font-weight: bold;
     }
+    @media all and (max-width: 800px) {
+    /*medium sized screens, (tablet and smaller) */
+       flex-direction: column;
+}
+    @media all and (max-width: 500px) {
+        /* On small screens, (no tablet! just mobile!)*/
+        flex-direction: column;
+        background-color: #eee;
+    }
 `;
 
 const { store, persistor } = createStore();
